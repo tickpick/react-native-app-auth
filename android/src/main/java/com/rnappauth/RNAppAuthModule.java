@@ -25,7 +25,6 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.ReadableType;
 
 import com.rnappauth.utils.MapUtil;
-import com.rnappauth.utils.UnsafeConnectionBuilder;
 import com.rnappauth.utils.RegistrationResponseFactory;
 import com.rnappauth.utils.TokenResponseFactory;
 import com.rnappauth.utils.CustomConnectionBuilder;
@@ -480,7 +479,7 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
         if (tokenEndpointAuthMethod != null) {
             registrationRequestBuilder.setTokenEndpointAuthenticationMethod(tokenEndpointAuthMethod);
         }
-        
+
         RegistrationRequest registrationRequest = registrationRequestBuilder.build();
 
         AuthorizationService.RegistrationResponseCallback registrationResponseCallback = new AuthorizationService.RegistrationResponseCallback() {
@@ -712,11 +711,8 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
     private ConnectionBuilder createConnectionBuilder(boolean allowInsecureConnections, Map<String, String> headers) {
         ConnectionBuilder proxiedBuilder;
 
-        if (allowInsecureConnections) {
-            proxiedBuilder =UnsafeConnectionBuilder.INSTANCE;
-        } else {
-            proxiedBuilder = DefaultConnectionBuilder.INSTANCE;
-        }
+        proxiedBuilder = DefaultConnectionBuilder.INSTANCE;
+
 
         CustomConnectionBuilder customConnection = new CustomConnectionBuilder(proxiedBuilder);
         if (headers != null) {
